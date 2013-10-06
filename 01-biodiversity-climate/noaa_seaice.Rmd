@@ -6,30 +6,28 @@
 library(rnoaa)
 library(scales)
 library(ggplot2)
-library(doMC)
 library(plyr)
 ```
 
 ### Get URLs for data
 
-```{r geturls, warning=FALSE, comment=NA, message=FALSE, cache=TRUE}
+```{r geturls, warning=FALSE, comment=NA, message=FALSE}
 urls <- seaiceeurls(mo='Apr', pole='N')[1:12]
 ```
 
 ### Download sea ice data
 
-```{r getdata, warning=FALSE, comment=NA, message=FALSE, cache=TRUE}
-# registerDoMC(cores = 2)
-out <- llply(urls, noaa_seaice, storepath="~/", .parallel = TRUE)
+```{r getdata, warning=FALSE, comment=NA, message=FALSE}
+out <- llply(urls, noaa_seaice, storepath="~/")
 names(out) <- seq(1979, 1990, 1)
 df <- ldply(out)
 ```
 
 ### Plot data
 
-```{r plot, warning=FALSE, comment=NA, message=FALSE, cache=TRUE}
+```{r plot, warning=FALSE, comment=NA, message=FALSE}
 ggplot(df, aes(long, lat, group=group)) + 
   geom_polygon(fill = "steelblue") +
   theme_ice() +
-  facet_wrap(~ id)
+  facet_wrap(~ .id)
 ```

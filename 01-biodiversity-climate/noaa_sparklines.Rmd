@@ -1,5 +1,8 @@
 ### NOAA data with rnoaa, Sparklines on a map
 
+
+*THIS EXAMPLE WILL NOT WORK WHILE NOAA IS OFFLINE DURING GOV'T SHUTDOWN*
+
 In this example, we search for stations that collect climate data, then get the data for those stations, pull out only the precipitation data, then get latitude/longitude coordinates for each station, and plot data on a map. 
 
 Load packages

@@ -15,7 +15,7 @@ First install some packages
 
 ```coffee
 install.packages("rgbif")
-install.packages("taxize_")
+install.packages("taxize")
 install.packages("rfisheries")
 ```
 

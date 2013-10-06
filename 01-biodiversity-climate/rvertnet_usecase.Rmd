@@ -5,6 +5,7 @@
 ```{r load}
 library(rvertnet)
 library(ggplot2)
+library(doMC)
 ```
 
 ### Define a species list
@@ -16,7 +17,8 @@ splist <- splist <- c("Accipiter erythronemius","Junco hyemalis","Aix sponsa","H
 ### Search for occurrences in VertNet
 
 ```{r splist2, cache=TRUE}
-out <- lapply(splist, function(x) vertoccurrence(t=x, grp="bird", num=500))
+registerDoMC(cores=4)
+out <- llply(splist, function(x) vertoccurrence(t=x, grp="bird", num=500), .parallel=TRUE)
 ```
 
 ### Plot data

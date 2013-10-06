@@ -3,16 +3,17 @@
 ### Load libraries
 
 
-```coffee
+```r
 library(rvertnet)
 library(ggplot2)
+library(doMC)
 ```
 
 
 ### Define a species list
 
 
-```coffee
+```r
 splist <- splist <- c("Accipiter erythronemius", "Junco hyemalis", "Aix sponsa", 
     "Haliaeetus leucocephalus", "Corvus corone", "Threskiornis molucca", "Merops malimbicus")
 ```
@@ -21,24 +22,29 @@ splist <- splist <- c("Accipiter erythronemius", "Junco hyemalis", "Aix sponsa",
 ### Search for occurrences in VertNet
 
 
-```coffee
-out <- lapply(splist, function(x) vertoccurrence(t = x, grp = "bird", num = 500))
+```r
+registerDoMC(cores = 4)
+out <- llply(splist, function(x) vertoccurrence(t = x, grp = "bird", num = 500), 
+    .parallel = TRUE)
 ```
 
 
 ### Plot data
 
 
-```coffee
+```r
 vertmap(out)
 ```
 
 ```
-## Rendering map...plotting 2265 points
+## Warning: invalid factor level, NA generated
+## Warning: invalid factor level, NA generated
+## Warning: NAs introduced by coercion
+## Warning: NAs introduced by coercion
 ```
 
 ```
-## Warning: Removed 1790 rows containing missing values (geom_point).
+## Rendering map...plotting 363264 points
 ```
 
 ![plot of chunk splist3](figure/splist3.png) 

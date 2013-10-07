@@ -108,6 +108,7 @@ One of the most useful aspects of the climate api is the ability to create maps 
 
 ```coffee
 ### Set local path
+system("mkdir kmltemp")
 options(kmlpath = "~/kmltemp")
 
 # create dataframe with mapping data to plot

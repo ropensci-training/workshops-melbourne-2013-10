@@ -16,7 +16,7 @@ library(ggplot2)
 
 
 ```coffee
-species <- species_codes(progress = "none")
+species <- species_codes(progress = "text")
 tunas <- grep("Tuna", species$english_name)
 ```
 

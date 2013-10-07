@@ -6,7 +6,7 @@
 ### Load libraries
 
 
-```r
+```coffee
 library(taxize)
 ```
 
@@ -14,7 +14,7 @@ library(taxize)
 Most of us will start out with a species list, something like the one below. Note that each of the names is spelled incorrectly.
 
 
-```r
+```coffee
 splist <- c("Helanthus annuus", "Pinos contorta", "Collomia grandiflorra", "Abies magnificaa", 
     "Rosa california", "Datura wrighti", "Mimulus bicolour", "Nicotiana glauca", 
     "Maddia sativa", "Bartlettia scapposa")
@@ -24,7 +24,7 @@ splist <- c("Helanthus annuus", "Pinos contorta", "Collomia grandiflorra", "Abie
 There are many ways to resolve taxonomic names in taxize. Of course, the ideal name resolver will do the work behind the scenes for you so that you don't have to do things like fuzzy matching. There are a few services in taxize like this we can choose from: the Global Names Resolver service from EOL (see function *gnr_resolve*) and the Taxonomic Name Resolution Service from iPlant (see function *tnrs*). In this case let's use the function *tnrs*.
 
 
-```r
+```coffee
 # The tnrs function accepts a vector of 1 or more
 splist_tnrs <- tnrs(query = splist, getpost = "POST", source_ = "iPlant_TNRS")
 
@@ -47,7 +47,7 @@ splist_tnrs <- tnrs(query = splist, getpost = "POST", source_ = "iPlant_TNRS")
 2    Bartlettia scapposa   Bartlettia scaposa iPlant_TNRS  0.98
 ```
 
-```r
+```coffee
 
 # Note the scores. They suggest that there were no perfect matches, but they
 # were all very close, ranging from 0.77 to 0.99 (1 is the highest).  Let's
@@ -69,7 +69,7 @@ splist_tnrs <- tnrs(query = splist, getpost = "POST", source_ = "iPlant_TNRS")
 Another common task is getting the taxonomic tree upstream from your study taxa. We often know what family or order our taxa are in, but it we often don't know the tribes, subclasses, and superfamilies. taxize provides many avenues to getting classifications. Two of them are accessible via a single function (*classification*): the Integrated Taxonomic Information System (ITIS) and National Center for Biotechnology Information (NCBI); and via the Catalogue of Life (see function *col_classification*):
 
 
-```r
+```coffee
 # Get UIDs for species through NCBI
 uids <- get_uid(sciname = splist, verbose = FALSE)
 
@@ -105,7 +105,7 @@ allnames_df[1:2, ]
 Using the species list, with the corrected names, we can now search for occurrence data. The Global Biodiversity Information Facility (GBIF) has the largest collection of records data, and has a  API that we can interact with programmatically from R.
 
 
-```r
+```coffee
 library(rgbif)
 library(ggplot2)
 ```
@@ -114,7 +114,7 @@ library(ggplot2)
 ### Get occurences 
 
 
-```r
+```coffee
 occurr_list <- occurrencelist_many(as.character(allnames_df$splist), coordinatestatus = TRUE, 
     maxresults = 50, fixnames = "change")
 ```
@@ -123,7 +123,7 @@ occurr_list <- occurrencelist_many(as.character(allnames_df$splist), coordinates
 ### Make a map
 
 
-```r
+```coffee
 gbifmap_list(occurr_list) + coord_equal()
 ```
 

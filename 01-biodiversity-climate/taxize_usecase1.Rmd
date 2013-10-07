@@ -47,8 +47,7 @@ gethiernames <- function(x){
   temp <- x[x$Rank %in% c('kingdom','phylum','order','family'), c("Rank","ScientificName")]
   values <- data.frame(t(temp[,2]))
   names(values) <- temp[,1]
-  return( values )
-, cache=TRUE}
+  return( values )}
 names(class_list) <- splist # assign spnames to list
 class_df <- ldply(class_list, gethiernames)
 allnames_df <- merge(data.frame(splist), class_df, by.x="splist", by.y=".id")

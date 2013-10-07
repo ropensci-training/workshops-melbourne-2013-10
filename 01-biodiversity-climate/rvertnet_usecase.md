@@ -3,7 +3,7 @@
 ### Load libraries
 
 
-```r
+```coffee
 library(rvertnet)
 library(ggplot2)
 library(doMC)
@@ -13,7 +13,7 @@ library(doMC)
 ### Define a species list
 
 
-```r
+```coffee
 splist <- splist <- c("Accipiter erythronemius", "Junco hyemalis", "Aix sponsa", 
     "Haliaeetus leucocephalus", "Corvus corone", "Threskiornis molucca", "Merops malimbicus")
 ```
@@ -22,7 +22,7 @@ splist <- splist <- c("Accipiter erythronemius", "Junco hyemalis", "Aix sponsa",
 ### Search for occurrences in VertNet
 
 
-```r
+```coffee
 registerDoMC(cores = 4)
 out <- llply(splist, function(x) vertoccurrence(t = x, grp = "bird", num = 500), 
     .parallel = TRUE)
@@ -32,7 +32,7 @@ out <- llply(splist, function(x) vertoccurrence(t = x, grp = "bird", num = 500),
 ### Plot data
 
 
-```r
+```coffee
 vertmap(out)
 ```
 

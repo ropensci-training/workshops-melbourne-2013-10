@@ -10,7 +10,7 @@ This example can be done using BISON data as well with our rbison package.
 ### Load libraries
 
 
-```r
+```coffee
 library(rgbif)
 library(ggplot2)
 library(plyr)
@@ -28,7 +28,7 @@ library(doMC)
 ### Get bounding boxes for some cites
 
 
-```r
+```coffee
 box <- read.table("bounding.txt", sep = "\t", col.names = c("city", "minlat", 
     "maxlon", "maxlat", "minlon"))
 ```
@@ -39,7 +39,7 @@ box <- read.table("bounding.txt", sep = "\t", col.names = c("city", "minlat",
 We'll not restrain our search to any particular taxonomic group, although you will likely do that in your own research. We'll make a new column with single lat/long coordinates for each cell for easy plotting. Last, we'll select 100 random cell IDs.
 
 
-```r
+```coffee
 temp <- gbifdata(densitylist(originisocountrycode = "US"))
 temp <- transform(temp, lat = (minLatitude + maxLatitude)/2, lon = (minLongitude + 
     maxLongitude)/2)
@@ -50,7 +50,7 @@ cellids <- sample(temp$cellid, 100)
 Then search for data for each of those cell ID's. We'll define a function to pass in each cell ID.
 
 
-```r
+```coffee
 getdata <- function(x, maxresults = 100) {
     out <- occurrencelist(cellid = x, coordinatestatus = TRUE, maxresults = maxresults)
     df <- gbifdata(out, coordinatestatus = TRUE)
@@ -65,7 +65,7 @@ out <- ldply(cellids, getdata, .parallel = TRUE)
 ## nor servname provided, or not known"
 ```
 
-```r
+```coffee
 out2 <- merge(out, temp[, c("cellid", "lat", "lon")], by = "cellid")
 ```
 
@@ -73,7 +73,7 @@ out2 <- merge(out, temp[, c("cellid", "lat", "lon")], by = "cellid")
 ## Error: object 'out' not found
 ```
 
-```r
+```coffee
 # remove points outside the US
 out3 <- out2[out2$lat < 49 & out2$lat > 24.7433195 & out2$lon > -130 & out2$lon < 
     -66.9513812, ]
@@ -87,7 +87,7 @@ out3 <- out2[out2$lat < 49 & out2$lat > 24.7433195 & out2$lon > -130 & out2$lon 
 ### Plot data
 
 
-```r
+```coffee
 mapp <- map_data("state")
 ggplot(mapp, aes(long, lat)) + geom_polygon(aes(group = group), fill = "white", 
     alpha = 0, color = "gray80", size = 0.8) + geom_point(data = out3, aes(lon, 

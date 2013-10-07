@@ -14,7 +14,7 @@ First install some packages
 
 ```{r, libraries, eval = FALSE, warning = FALSE}
 install.packages("rgbif")
-install.packages("taxize_")
+install.packages("taxize")
 install.packages("rfisheries")
 ```
 
@@ -54,7 +54,7 @@ Next, using the species names we can verify whether they are correct and also lo
 #
 ```{r, taxize, warning = FALSE}
 #  Using the species names we obtain taxonomic identifiers
-taxon_identifiers <- get_tsn(species$scientific_name)
+taxon_identifiers <- get_uid(species$scientific_name)
 # then we can grab the taxonomic information for each species
 classification_data <- classification(taxon_identifiers)
 names(classification_data) <- species[[1]]
@@ -66,9 +66,8 @@ Note: You may notice that we found nothing on ta
 
 ```{r, gbif, warning = FALSE}
 # then locations
-locations <- llply(as.list(species$scientific_name), occurrencelist_many, .progress = "none")
-location_df <- compact(llply(locations, gbifdata))
-location_df <- ldply(location_df)
+locations <- llply(as.list(species$scientific_name), function(x) gbifdata(occurrencelist(x)), .progress = "none")
+location_df <- ldply(locations)
 names(location_df)[1] <- "scientific_name"
 new_data <- merge(species, location_df)
 ```

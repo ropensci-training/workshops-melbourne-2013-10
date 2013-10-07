@@ -17,21 +17,6 @@ library(plyr)
 library(doMC)
 ```
 
-```
-## Loading required package: foreach foreach: simple, scalable parallel
-## programming from Revolution Analytics Use Revolution R for scalability,
-## fault tolerance and more. http://www.revolutionanalytics.com Loading
-## required package: iterators Loading required package: parallel
-```
-
-
-### Get bounding boxes for some cites
-
-
-```coffee
-box <- read.table("bounding.txt", sep = "\t", col.names = c("city", "minlat", 
-    "maxlon", "maxlat", "minlon"))
-```
 
 
 ### Get GBIF data using the rOpenSci package rgbif.
@@ -58,29 +43,10 @@ getdata <- function(x, maxresults = 100) {
 }
 registerDoMC(cores = 4)
 out <- ldply(cellids, getdata, .parallel = TRUE)
-```
-
-```
-## Error: task 2 failed - "Could not resolve host: writefunction; nodename
-## nor servname provided, or not known"
-```
-
-```coffee
 out2 <- merge(out, temp[, c("cellid", "lat", "lon")], by = "cellid")
-```
-
-```
-## Error: object 'out' not found
-```
-
-```coffee
 # remove points outside the US
 out3 <- out2[out2$lat < 49 & out2$lat > 24.7433195 & out2$lon > -130 & out2$lon < 
     -66.9513812, ]
-```
-
-```
-## Error: object 'out2' not found
 ```
 
 
@@ -96,9 +62,7 @@ ggplot(mapp, aes(long, lat)) + geom_polygon(aes(group = group), fill = "white",
     theme(legend.position = "bottom", legend.key = element_blank())
 ```
 
-```
-## Error: object 'out3' not found
-```
+![plot of chunk plot](figure/plot.png) 
 
 
 ### Notes

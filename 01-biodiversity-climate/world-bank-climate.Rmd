@@ -87,7 +87,7 @@ One of the most useful aspects of the climate api is the ability to create maps 
 
 ### Set local path  
 options(kmlpath = "~/kmltemp")
-
+system("mkdir kmltemp")
 #create dataframe with mapping data to plot
 eu_basin <- create_map_df(Eur_basin)
 

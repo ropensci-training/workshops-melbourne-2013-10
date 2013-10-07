@@ -10,7 +10,7 @@ This example can be done using BISON data as well with our rbison package.
 ### Load libraries
 
 
-```r
+```coffee
 library(rgbif)
 library(dismo)
 library(maptools)
@@ -20,7 +20,7 @@ library(maptools)
 ### Make a list of files that are installed with the dismo package, then create a rasterStack from these
 
 
-```r
+```coffee
 files <- list.files(paste(system.file(package = "dismo"), "/ex", sep = ""), 
     "grd", full.names = TRUE)
 predictors <- stack(files)
@@ -30,7 +30,7 @@ predictors <- stack(files)
 ### Get world boundaries.
 
 
-```r
+```coffee
 data(wrld_simpl)
 ```
 
@@ -38,7 +38,7 @@ data(wrld_simpl)
 ### Get GBIF data using the rOpenSci package rgbif.
 
 
-```r
+```coffee
 df <- occurrencelist(scientificname = "bradypus*", coordinatestatus = TRUE, 
     maxresults = 500)
 df <- gbifdata(df, coordinatestatus = TRUE)
@@ -49,7 +49,7 @@ df2 <- data.frame(lon = df$decimalLongitude, lat = df$decimalLatitude)
 ### Plot: (1) Add raster data, (2) Add political boundaries, (3) Add the points (occurrences)
 
 
-```r
+```coffee
 plot(predictors, 1)
 plot(wrld_simpl, add = TRUE)
 points(df2, col = "blue")

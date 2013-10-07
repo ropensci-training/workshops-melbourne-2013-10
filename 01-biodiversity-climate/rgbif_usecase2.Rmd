@@ -17,11 +17,6 @@ library(plyr)
 library(doMC)
 ```
 
-### Get bounding boxes for some cites
-
-```{r box}
-box <- read.table("bounding.txt", sep="\t", col.names=c("city","minlat","maxlon","maxlat","minlon"))
-```
 
 ### Get GBIF data using the rOpenSci package rgbif.
 

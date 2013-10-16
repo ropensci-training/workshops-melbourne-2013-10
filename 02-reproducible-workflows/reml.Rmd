@@ -49,31 +49,38 @@ names(codes) <- code_names$a3_code
 codes
 ```
 
-Perhaps we want date formats
+
+We set column classes appropriately:
 
 ```{r}
-#dat[[2]] <- as.POSIXlt.character(dat[[2]], format = "%Y")
-```
-
-
-```{r}
-meta <- list("catch" = list("catch", "Global Landings of fish", "tonnes"),
-             "year" = list("year", "the year for which data was reported", "YYYY"),
-             "a3_code" = list("a3_code", "3 digit country code", codes))
-```
-
-We must make sure that column classes are correct.  
-
-```{r}
-# dat$year = as.Date(as.character(dat$year), format="%Y")
+dat$year = as.Date(as.character(dat$year), format="%Y")
 dat$a3_code = as.factor(dat$a3_code)
 ```
 
 ```{r}
-require(reml)
-description = "Landings data for several species by year, from the OpenFisheries database"
+library(reml)
+```
 
-eml_write(dat = dat, meta, title = "Landings Data", 
+We add essential metadata to the table definiting the column headings and their units: 
+
+```{r}
+dat <- data.set(dat, 
+                col.defs = c(catch = "Global Landings of fish",
+                             year = "the year for which data was reported",
+                             a3_code = "a 3 digit country code"),
+                unit.defs = list(catch = c("tonnes", precision = 1),
+                                 year = "YYYY",
+                                 a2_code = codes))
+                  
+```
+
+If names are not provided for `col.defs` and `unit.defs` reml will assume these are given in the order of the columns of the data frame. 
+
+
+```{r warnings=FALSE}
+description = "Landings data for several species by year, from the OpenFisheries database"
+eml_write(dat = dat, 
+          title = "Landings Data", 
           description = description, 
           creator = "Karthik Ram <karthik@ropensci.org>", 
           file = "landings.xml")
